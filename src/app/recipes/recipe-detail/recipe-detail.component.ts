@@ -13,20 +13,20 @@ import { Subscription } from 'rxjs';
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: Recipe;
   recipeIdSubscription: Subscription;
-
+  recipeId: number;
 
   constructor(private route: ActivatedRoute, 
     private slService: ShoppingListService,
     private recipeService: RecipeService) {}
 
   ngOnInit(): void {
-    const recipeId = +this.route.snapshot.params['id'];
-    this.recipe = this.recipeService.getRecipe(recipeId);
+    this.recipeId = +this.route.snapshot.params['id'];
+    this.recipe = this.recipeService.getRecipe(this.recipeId);
 
     this.recipeIdSubscription = this.route.params.subscribe(
       (params: Params) => {
-        const recipeId = +params['id'];
-        this.recipe = this.recipeService.getRecipe(recipeId);
+        this.recipeId = +params['id'];
+        this.recipe = this.recipeService.getRecipe(this.recipeId);
       }
     );
 
